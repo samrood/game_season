@@ -1,5 +1,5 @@
 ## Recommendation on Game Release Season
-My overall objective of this prpject was to be able to recommend the best time of year to a relase in order to obtain the best revenue by looking at the relese dates and revenues of similar games.
+My overall objective of this project was to be able to recommend the best time of year to a release in order to obtain the best revenue by looking at the release dates and revenues of similar games.
 
 
 ## Data Collecting and Cleaning - noteboook 
@@ -26,3 +26,6 @@ The flask app will do the same as the recommendation notebook. However instead o
 The data used for this project are 2 kaggle datasets created from scraping Steam.com. They can be found at: 
 - https://www.kaggle.com/trolukovich/steam-games-complete-dataset
 - https://www.kaggle.com/nikdavis/steam-store-games
+
+## Blog
+You can read my Medium article [here](https://medium.com/@samantharood2/recommendation-on-game-release-season-ef50c5bd4dc5)
