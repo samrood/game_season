@@ -1,0 +1,569 @@
+<html>
+  <head>
+    <title>Game Details</title>
+  </head>
+  <br /> <br /> <br />
+<body style="background-image: url(https://images.unsplash.com/photo-1454117096348-e4abbeba002c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80); background-repeat: no-repeat center fixed; background-size: cover;">
+  <h1 style="color:black; font-family:Courier New; font-size: 60px;" align = 'center'>Game Details</h1>
+
+<br />
+
+  {% if step == "choose_title" %}
+  <p style="color:black; font-family:Courier New; font-size: 20px; padding: 10px 60px;" align = 'center'><b>Input your games information to get a reccomended season to release the game in order to get the highest revenue</b></p>
+    <br /> <br /> <br />
+    <p style="color:black; font-family:Courier New; font-size: 18px;" align = 'center'><b>Start with entering the game title:</b></p>
+    <form action="{{ url_for('game_picker') }}" method="post" align='center' style = "font-family:Courier New;">
+    <br>
+    <input type="text" name="title"><br>
+    <input type=hidden name="step" value="choose_desc">
+    <br>
+    <input type="submit" value="next" style="font-family:Courier New;">
+
+  
+  {% elif step == "choose_desc" %}
+    <p style="color:black; font-family:Courier New; font-size: 18px;" align = 'center'><b>Give a brief description of the game: </b></p>
+    <br>
+    <form action="{{ url_for('game_picker') }}" method="post" align="center" style="font-family:Courier New;">
+    <input type="text" name="desc"><br>
+    <input type="hidden" name="title" value="{{title}}">
+    <input type=hidden name="step" value="choose_mature">
+    <br>
+    <input type="submit" value="next">
+    </form>
+
+{% elif step == "choose_mature" %}
+    <p style="color:black; font-family:Courier New; font-size: 18px;" align = 'center'><b>Input the type of mature content (type 'none' if there is none): </b></p>
+    <br>
+    <form action="{{ url_for('game_picker') }}" method="post" align="center" style="font-family:Courier New;">
+    <input type="text" name="mature"><br>
+    <input type="hidden" name="title" value="{{title}}">
+    <input type="hidden" name="desc" value="{{desc}}">
+    <input type=hidden name="step" value="choose_type">
+    <br>
+    <input type="submit" value="next">
+    </form>
+
+
+  {% elif step == "choose_type" %}
+    <p style="color:black; font-family:Courier New; font-size: 18px;" align = 'center'><b>Pick the game type:</b></p>
+    <br>
+    <form action="{{ url_for('game_picker') }}" method="post" align='center' style = "font-family:Courier New;">
+    <input type="radio" name="game_type" value="app">App<br>
+    <input type="radio" name="game_type" value="sub">Sub<br>
+    <input type="radio" name="game_type" value="bundle">Bundle<br>
+    <input type="hidden" name="title" value="{{title}}">
+    <input type="hidden" name="desc" value="{{desc}}">
+    <input type="hidden" name="mature" value="{{mature}}">
+    <input type=hidden name="step" value="choose_genre">
+    <br>
+    <input type="submit" value="next">
+    </form>
+
+  {% elif step == "choose_genre" %}
+    <p style="color:black; font-family:Courier New; font-size: 18px;" align = 'center'><b>Choose genre(s):</b></p>
+    <br>
+    <form action="{{ url_for('game_picker') }}" method="post" align='center' style = "font-family:Courier New;">
+    <input type="checkbox" name="genre" value='action'>Action
+    <input type="checkbox" name="genre" value="adventure">Adventure
+    <input type="checkbox" name="genre" value="animation&modeling">Animation & Modeling
+    <input type="checkbox" name="genre" value="audioproduction'">Audio-Production
+    <input type="checkbox" name="genre" value="casual">Casual<br>
+    <input type="checkbox" name="genre" value="design&illustration">Design & Illustration
+    <input type="checkbox" name="genre" value="education">Education
+    <input type="checkbox" name="genre" value="gamedevelopment">Game-Development
+    <input type="checkbox" name="genre" value='indie'>Indie
+    <input type="checkbox" name="genre" value="massivelymultiplayer">Massively-Multi-Player<br>
+    <input type="checkbox" name="genre" value="nudity">Nudity
+    <input type="checkbox" name="genre" value="racing">Racing
+    <input type="checkbox" name="genre" value="rpg">RPG
+    <input type="checkbox" name="genre" value="sexualcontent">Sexual Content
+    <input type="checkbox" name="genre" value="softwaretraining">Software-Training<br>
+    <input type="checkbox" name="genre" value="simulation">Simulation
+    <input type="checkbox" name="genre" value="sports">Sports
+    <input type="checkbox" name="genre" value="strategy">Strategy
+    <input type="checkbox" name="genre" value="utilities">Utilities<br>
+    <input type="checkbox" name="genre" value="videoproduction">Video-Production
+    <input type="checkbox" name="genre" value="violent">Violent
+    <input type="checkbox" name="genre" value="webpublishing">Webpublishing<br>
+    <input type="hidden" name="title" value="{{title}}">
+    <input type="hidden" name="desc" value="{{desc}}">
+    <input type="hidden" name="mature" value="{{mature}}">
+    <input type="hidden" name="game_type" value="{{game_type}}">
+    <input type="hidden" name="step" value="choose_category">
+    <br>
+    <input type="submit" value="next">
+    </form>
+
+   {% elif step == "choose_category" %}
+    <p style="color:black; font-family:Courier New; font-size: 18px;" align = 'center'><b>Choose categories(s):</b></p>
+    <br>
+    <form action="{{ url_for('game_picker') }}" method="post" align='center' style = "font-family:Courier New;">
+    <input type="checkbox" name="category" value="captionsavailable">Captions Available
+    <input type="checkbox" name="category" value="commentaryavailable">Commentary Available
+    <input type="checkbox" name="category" value="cross-platformmultiplayer">Cross-Platform Multiplayer
+    <input type="checkbox" name="category" value="fullcontrollersupport">Full Controller Support
+    <input type="checkbox" name="category" value="includessourcesdk">Includes source-sdk<br>
+    <input type="checkbox" name="category" value="in-apppurchases">In-app Purchases
+    <input type="checkbox" name="category" value="includesleveleditor">Includes Level Editor
+    <input type="checkbox" name="category" value="localco-op">Local Co-Op<br>
+    <input type="checkbox" name="category" value="localmulti-player">Local Multi-Player
+    <input type="checkbox" name="category" value="mmo">MMO
+    <input type="checkbox" name="category" value="multi-player">Multi-Player
+    <input type="checkbox" name="category" value="onlinemulti-player">Online Multi-Player<br>
+    <input type="checkbox" name="category" value="onlineco-op">Online Co-Op
+    <input type="checkbox" name="category" value="partialcontrollersupport">Partial Controller Support
+    <input type="checkbox" name="category" value="single-player">Single-Player<br>
+    <input type="checkbox" name="category" value="shared/splitscreen">Shared/Splitscreen
+    <input type="checkbox" name="category" value="stats">Stats
+    <input type="checkbox" name="category" value="steamcloud">Steamcloud
+    <input type="checkbox" name="category" value="steamachievements">Steam Achievements
+    <input type="checkbox" name="category" value="steamleaderboards">Steam Leaderboards<br>
+    <input type="checkbox" name="category" value="steamtradingcards">Steam trading cards
+    <input type="checkbox" name="category" value="steamturnnotifications">Steam Turn Notifications
+    <input type="checkbox" name="category" value="steamvrcollectibles">Steam VR Collectibles<br>
+    <input type="checkbox" name="category" value="steamworkshop">Steam Workshop
+    <input type="checkbox" name="category" value="valveanti-cheatenabled">Valve Anti-Cheat Enabled
+    <input type="checkbox" name="course_num" value="vrsupport">VR Support<br>
+    <input type="hidden" name="title" value="{{title}}">
+    <input type="hidden" name="desc" value="{{desc}}">
+    <input type="hidden" name="mature" value="{{mature}}">
+    <input type="hidden" name="game_type" value="{{game_type}}">
+    <input type="hidden" name="genre" value="{{genre}}">
+    <input type="hidden" name="step" value="choose_tags">
+    <br>
+    <input type="submit" value="next">
+    </form>
+
+    {% elif step == "choose_tags" %}
+    <p style="color:black; font-family:Courier New; font-size: 18px;" align = 'center'><b>Choose any tags(s) that would dscribe the game further:</b></p>
+    <br>
+    <form action="{{ url_for('game_picker') }}" method="post" align='center' style = "font-family:Courier New;">
+    <input type="checkbox" name="tag_tag" value="1980s">1980's
+    <input type="checkbox" name="tag_tag" value="1990's">1990's
+    <input type="checkbox" name="tag_tag" value="2d">2D
+    <input type="checkbox" name="tag_tag" value="2dfighter">2D Fighter
+    <input type="checkbox" name="tag_tag" value="3d">3D
+    <input type="checkbox" name="tag_tag" value="3dplatformer">3D Platformer
+    <input type="checkbox" name="tag_tag" value="3dvision">3D Vision
+    <input type="checkbox" name="tag_tag" value="4x">4X
+    <input type="checkbox" name="tag_tag" value="4playerlocal">4 Player Local
+    <input type="checkbox" name="tag_tag" value="6dof">6DOF
+    <input type="checkbox" name="tag_tag" value="abstract">Abstract
+    <input type="checkbox" name="tag_tag" value="action">Action
+    <input type="checkbox" name="tag_tag" value="action-adventure">Action-Adventure<br>
+    <input type="checkbox" name="tag_tag" value="actionrpg">Action RPG
+    <input type="checkbox" name="tag_tag" value="addictive">Addictive
+    <input type="checkbox" name="tag_tag" value="adventure">Adventure
+    <input type="checkbox" name="tag_tag" value="agriculture">Agriculture
+    <input type="checkbox" name="tag_tag" value="aliens">Aliens
+    <input type="checkbox" name="tag_tag" value="alternatehistory">Alternate History
+    <input type="checkbox" name="tag_tag" value="america">America
+    <input type="checkbox" name="tag_tag" value="anime">Anime
+    <input type="checkbox" name="tag_tag" value="animation&modeling">Animation & Modeling
+    <input type="checkbox" name="tag_tag" value="arcade">Arcade<br>
+    <input type="checkbox" name="tag_tag" value="artificialintelligence">Artificial Intelligence
+    <input type="checkbox" name="tag_tag" value="arenashooter">Arena Shooter
+    <input type="checkbox" name="tag_tag" value="assassin">Assassin
+    <input type="checkbox" name="tag_tag" value="asymmetricvr">Asymmetric VR
+    <input type="checkbox" name="tag_tag" value="asynchronousmultiplayer">Asynchronous Multiplayer
+    <input type="checkbox" name="tag_tag" value="atv">ATV
+    <input type="checkbox" name="tag_tag" value="atmospheric">Atmospheric
+    <input type="checkbox" name="tag_tag" value="audioproduction">Audio Production<br>
+    <input type="checkbox" name="tag_tag" value="automation">Automation
+    <input type="checkbox" name="tag_tag" value="basketball">Basketball
+    <input type="checkbox" name="tag_tag" value="basedonanovel">Based on a Novel
+    <input type="checkbox" name="tag_tag" value="basebuilding">Base Building
+    <input type="checkbox" name="tag_tag" value="baseball">Baseball
+    <input type="checkbox" name="tag_tag" value="batman">Batman
+    <input type="checkbox" name="tag_tag" value="'battleroyale'">'Battleroyale'
+    <input type="checkbox" name="tag_tag" value="beautiful">Beautiful
+    <input type="checkbox" name="tag_tag" value="beat'emup">Beat 'Em Up<br>
+    <input type="checkbox" name="tag_tag" value="benchmark">Benchmark
+    <input type="checkbox" name="tag_tag" value="bikes">Bikes
+    <input type="checkbox" name="tag_tag" value="blood">Blood
+    <input type="checkbox" name="tag_tag" value="boardgame">Boardgame
+    <input type="checkbox" name="tag_tag" value="bowling">Bowling
+    <input type="checkbox" name="tag_tag" value="bmx">bmx
+    <input type="checkbox" name="tag_tag" value="bullethell">Bullet Hell
+    <input type="checkbox" name="tag_tag" value="building">Building
+    <input type="checkbox" name="tag_tag" value="bullettime">Bullet Time
+    <input type="checkbox" name="tag_tag" value="cartoon">Cartoon
+    <input type="checkbox" name="tag_tag" value="cats">Cats
+    <input type="checkbox" name="tag_tag" value="cardgame">Card Game
+    <input type="checkbox" name="tag_tag" value="casual">Casual<br>
+    <input type="checkbox" name="tag_tag" value="capitalism">Capitalism
+    <input type="checkbox" name="tag_tag" value="cartoony">Cartoony
+    <input type="checkbox" name="tag_tag" value="characteractiongame">Character Action Game
+    <input type="checkbox" name="tag_tag" value="charactercustomization">Character Customization
+    <input type="checkbox" name="tag_tag" value="chess">Chess
+    <input type="checkbox" name="tag_tag" value="chooseyourownadventure">Choose Your Own Adventure
+    <input type="checkbox" name="tag_tag" value="choicesmatter">Choices Matter<br>
+    <input type="checkbox" name="tag_tag" value="citybuilder">City Builder
+    <input type="checkbox" name="tag_tag" value="cinematic">Cinematic
+    <input type="checkbox" name="tag_tag" value="class-based">Class-Based
+    <input type="checkbox" name="tag_tag" value="classic">Classic
+    <input type="checkbox" name="tag_tag" value="clicker">Clicker
+    <input type="checkbox" name="tag_tag" value="coldwar">Cold War
+    <input type="checkbox" name="tag_tag" value="co-op">Co-Op
+    <input type="checkbox" name="tag_tag" value="co-opcampaign">Co-Op Campaign
+    <input type="checkbox" name="tag_tag" value="colorful">Colorful
+    <input type="checkbox" name="tag_tag" value="competitive">Competitive<br>
+    <input type="checkbox" name="tag_tag" value="comicbook">Comicbook
+    <input type="checkbox" name="tag_tag" value="comedy">Comedy
+    <input type="checkbox" name="tag_tag" value="conspiracy">Conspiracy
+    <input type="checkbox" name="tag_tag" value="conversation">Conversation
+    <input type="checkbox" name="tag_tag" value="controller">Controller
+    <input type="checkbox" name="tag_tag" value="crime">Crime
+    <input type="checkbox" name="tag_tag" value="crafting">Crafting
+    <input type="checkbox" name="tag_tag" value="crowdfunded">Crowd Funded
+    <input type="checkbox" name="tag_tag" value="crpg">CRPG
+    <input type="checkbox" name="tag_tag" value="cute">Cute
+    <input type="checkbox" name="tag_tag" value="cyberpunk">Cyberpunk
+    <input type="checkbox" name="tag_tag" value="cycling">Cycling<br>
+    <input type="checkbox" name="tag_tag" value="dark">Dark
+    <input type="checkbox" name="tag_tag" value="darkcomedy">Dark Comedy
+    <input type="checkbox" name="tag_tag" value="darkfantasy">Dark Fantasy
+    <input type="checkbox" name="tag_tag" value="darkhumor">Dark Humor
+    <input type="checkbox" name="tag_tag" value="datingsim">Dating Sim
+    <input type="checkbox" name="tag_tag" value="demons">Demons
+    <input type="checkbox" name="tag_tag" value="destruction">Destruction
+    <input type="checkbox" name="tag_tag" value="detective">Detective
+    <input type="checkbox" name="tag_tag" value="design&illustration">Design & Illustration<br>
+    <input type="checkbox" name="tag_tag" value="difficult">Difficult
+    <input type="checkbox" name="tag_tag" value="dinosaurs">Dinosaurs
+    <input type="checkbox" name="tag_tag" value="diplomacy">Diplomacy
+    <input type="checkbox" name="tag_tag" value="dog">Dog
+    <input type="checkbox" name="tag_tag" value="documentary">Documentary
+    <input type="checkbox" name="tag_tag" value="driving">Driving
+    <input type="checkbox" name="tag_tag" value="drama">Drama
+    <input type="checkbox" name="tag_tag" value="dragons">Dragons
+    <input type="checkbox" name="tag_tag" value="dungeons&dragons">Dungeons & Dragons
+    <input type="checkbox" name="tag_tag" value="dungeoncrawler">Dungeon Crawler<br>
+    <input type="checkbox" name="tag_tag" value="dynamicnarration">Dynamic Narration
+    <input type="checkbox" name="tag_tag" value="dystopian">Dystopian
+    <input type="checkbox" name="tag_tag" value="economy">Economy
+    <input type="checkbox" name="tag_tag" value="education">Education
+    <input type="checkbox" name="tag_tag" value="emotional">Emotional
+    <input type="checkbox" name="tag_tag" value="epic">Epic
+    <input type="checkbox" name="tag_tag" value="episodic">Episodic
+    <input type="checkbox" name="tag_tag" value="e-sports">E-Sports
+    <input type="checkbox" name="tag_tag" value="experience">Experience
+    <input type="checkbox" name="tag_tag" value="experimental">Experimental
+    <input type="checkbox" name="tag_tag" value="exploration">Exploration<br>
+    <input type="checkbox" name="tag_tag" value="faith">Faith
+    <input type="checkbox" name="tag_tag" value="familyfriendly">Family Friendly
+    <input type="checkbox" name="tag_tag" value="fantasy">Fantasy
+    <input type="checkbox" name="tag_tag" value="fast-paced">Fast-Paced
+    <input type="checkbox" name="tag_tag" value="femaleprotagonist">Female Protagonist
+    <input type="checkbox" name="tag_tag" value="fighting">Fighting
+    <input type="checkbox" name="tag_tag" value="first-person">First-Person
+    <input type="checkbox" name="tag_tag" value="fishing">Fishing<br>
+    <input type="checkbox" name="tag_tag" value="flight">Flight
+    <input type="checkbox" name="tag_tag" value="fmv">FMV
+    <input type="checkbox" name="tag_tag" value="football">Football
+    <input type="checkbox" name="tag_tag" value="foreign">Foreign
+    <input type="checkbox" name="tag_tag" value="fps">FPS
+    <input type="checkbox" name="tag_tag" value="funny">Funny
+    <input type="checkbox" name="tag_tag" value="futuristic">Futuristic
+    <input type="checkbox" name="tag_tag" value="Gambling">Gambling
+    <input type="checkbox" name="tag_tag" value="gamemaker">Game Maker
+    <input type="checkbox" name="tag_tag" value="gaming">Gaming
+    <input type="checkbox" name="tag_tag" value="gamesworkshop">Games Workshop
+    <input type="checkbox" name="tag_tag" value="godgame">God Game<br>
+    <input type="checkbox" name="tag_tag" value="golf">Golf
+    <input type="checkbox" name="tag_tag" value="gore">Gore
+    <input type="checkbox" name="tag_tag" value="gothic">Gothic
+    <input type="checkbox" name="tag_tag" value="grandstrategy">Grand Strategy
+    <input type="checkbox" name="tag_tag" value="grid-basedmovement">Grid-Based Movement
+    <input type="checkbox" name="tag_tag" value="guncustomization">Gun Customization
+    <input type="checkbox" name="tag_tag" value="hacking">Hacking
+    <input type="checkbox" name="tag_tag" value="hackandslash">Hack and Slash
+    <input type="checkbox" name="tag_tag" value="hand-drawn">Hand-Drawn<br>
+    <input type="checkbox" name="tag_tag" value="hardware">Hardware
+    <input type="checkbox" name="tag_tag" value="heist">Heist
+    <input type="checkbox" name="tag_tag" value="hexgrid">Hexgrid
+    <input type="checkbox" name="tag_tag" value="hiddenobject">Hidden Object
+    <input type="checkbox" name="tag_tag" value="historical">Historical
+    <input type="checkbox" name="tag_tag" value="hockey">Hockey
+    <input type="checkbox" name="tag_tag" value="horror">Horror
+    <input type="checkbox" name="tag_tag" value="horses">Horses
+    <input type="checkbox" name="tag_tag" value="hunting">Hunting
+    <input type="checkbox" name="tag_tag" value="illuminati">Illuminati
+    <input type="checkbox" name="tag_tag" value="immersivesim">Immersivesim
+    <input type="checkbox" name="tag_tag" value="indie">Indie<br>
+    <input type="checkbox" name="tag_tag" value="intentionallyawkwardcontrols">Intentionally Awkward Controls
+    <input type="checkbox" name="tag_tag" value="inventorymanagement">Inventory Management
+    <input type="checkbox" name="tag_tag" value="investigation">Investigation
+    <input type="checkbox" name="tag_tag" value="interactivefiction">Interactive Fiction
+    <input type="checkbox" name="tag_tag" value="isometric">Isometric
+    <input type="checkbox" name="tag_tag" value="jrpg">JRPG
+    <input type="checkbox" name="tag_tag" value="linear">Linear<br>
+    <input type="checkbox" name="tag_tag" value="localco-op">Local Co-Op
+    <input type="checkbox" name="tag_tag" value="lore-rich">Lore-Rich
+    <input type="checkbox" name="tag_tag" value="lemmings">Lemmings
+    <input type="checkbox" name="tag_tag" value="loot">Loot
+    <input type="checkbox" name="tag_tag" value="lego">Lego
+    <input type="checkbox" name="tag_tag" value="logic">Logic
+    <input type="checkbox" name="tag_tag" value="laracroft">Lara Croft
+    <input type="checkbox" name="tag_tag" value="lovecraftian">Love Craftian
+    <input type="checkbox" name="tag_tag" value="leveleditor">Level Editor
+    <input type="checkbox" name="tag_tag" value="localmultiplayer">Local Multi-Player<br>
+    <input type="checkbox" name="tag_tag" value="magic">Magic
+    <input type="checkbox" name="tag_tag" value="management">Management
+    <input type="checkbox" name="tag_tag" value="martialarts">Martial Arts
+    <input type="checkbox" name="tag_tag" value="mars">Mars
+    <input type="checkbox" name="tag_tag" value="massivelymultiplayer">Massively Multi-Player
+    <input type="checkbox" name="tag_tag" value="mature">Mature
+    <input type="checkbox" name="tag_tag" value="match3">Match3
+    <input type="checkbox" name="tag_tag" value="mechs">Mechs
+    <input type="checkbox" name="tag_tag" value="medieval">Medieval<br>
+    <input type="checkbox" name="tag_tag" value="memes">memes
+    <input type="checkbox" name="tag_tag" value="metroidvania">Metroidvania
+    <input type="checkbox" name="tag_tag" value="military">Military
+    <input type="checkbox" name="tag_tag" value="minigames">Minigames
+    <input type="checkbox" name="tag_tag" value="mining">Mining
+    <input type="checkbox" name="tag_tag" value="minimalist">Minimalist
+    <input type="checkbox" name="tag_tag" value="minigolf">Minigolf
+    <input type="checkbox" name="tag_tag" value="mmorpg">MMORPG
+    <input type="checkbox" name="tag_tag" value="moba">MOBA
+    <input type="checkbox" name="tag_tag" value="mod">mod
+    <input type="checkbox" name="tag_tag" value="moddable">Moddable
+    <input type="checkbox" name="tag_tag" value="modern">Modern
+    <input type="checkbox" name="tag_tag" value="motorbike">Motorbike<br>
+    <input type="checkbox" name="tag_tag" value="motocross">Motocross
+    <input type="checkbox" name="tag_tag" value="mouseonly'">Mouse Only'
+    <input type="checkbox" name="tag_tag" value="movie">Movie
+    <input type="checkbox" name="tag_tag" value="multiplayer">Multi-Player
+    <input type="checkbox" name="tag_tag" value="multipleendings">Multiple Endings
+    <input type="checkbox" name="tag_tag" value="music">Music
+    <input type="checkbox" name="tag_tag" value="music-basedproceduralgeneration">Music-Based Procedural Generation
+    <input type="checkbox" name="tag_tag" value="mystery">Mystery
+    <input type="checkbox" name="tag_tag" value="mysterydungeon">Mystery Dungeon<br>
+    <input type="checkbox" name="tag_tag" value="mythology">Mythology
+    <input type="checkbox" name="tag_tag" value="narration">Narration
+    <input type="checkbox" name="tag_tag" value="nature">Nature
+    <input type="checkbox" name="tag_tag" value="naval">Naval
+    <input type="checkbox" name="tag_tag" value="ninja">Ninja
+    <input type="checkbox" name="tag_tag" value="noir">Noir
+    <input type="checkbox" name="tag_tag" value="nonlinear">Non-Linear
+    <input type="checkbox" name="tag_tag" value="nsfw">nsfw
+    <input type="checkbox" name="tag_tag" value="nudity">Nudity
+    <input type="checkbox" name="tag_tag" value="offroad">Offroad<br>
+    <input type="checkbox" name="tag_tag" value="oldschool">Oldschool
+    <input type="checkbox" name="tag_tag" value="on-railsshooter">On-Rails Shooter
+    <input type="checkbox" name="tag_tag" value="onlineco-op">Online Co-Op
+    <input type="checkbox" name="tag_tag" value="openworld">Open World
+    <input type="checkbox" name="tag_tag" value="otome">Otome
+    <input type="checkbox" name="tag_tag" value="parody">Parody
+    <input type="checkbox" name="tag_tag" value="party-basedrpg">Party-Based RPG
+    <input type="checkbox" name="tag_tag" value="parkour">Parkour<br>
+    <input type="checkbox" name="tag_tag" value="permadeath">Permadeath
+    <input type="checkbox" name="tag_tag" value="philisophical">Philisophical
+    <input type="checkbox" name="tag_tag" value="photoediting">Photoediting
+    <input type="checkbox" name="tag_tag" value="physics">Physics
+    <input type="checkbox" name="tag_tag" value="proceduralgeneration">Procedural Generation
+    <input type="checkbox" name="tag_tag" value="pinball">Pinball
+    <input type="checkbox" name="tag_tag" value="pirates">Pirates
+    <input type="checkbox" name="tag_tag" value="pixelgraphics">Pixel Graphics
+    <input type="checkbox" name="tag_tag" value="platformer">Platformer<br>
+    <input type="checkbox" name="tag_tag" value="point&click">Point & Click
+    <input type="checkbox" name="tag_tag" value="politics">Politics
+    <input type="checkbox" name="tag_tag" value="political">Political
+    <input type="checkbox" name="tag_tag" value="pool">Pool
+    <input type="checkbox" name="tag_tag" value="post-apocalyptic">Post-Apocalyptic
+    <input type="checkbox" name="tag_tag" value="programming">Programming
+    <input type="checkbox" name="tag_tag" value="psychedelic">Psychedelic
+    <input type="checkbox" name="tag_tag" value="psychologicalhorror">Psychological Horror
+    <input type="checkbox" name="tag_tag" value="psychological">Psychological<br>
+    <input type="checkbox" name="tag_tag" value="puzzle'">Puzzle'
+    <input type="checkbox" name="tag_tag" value="puzzle-platformer">Puzzle-Platformer
+    <input type="checkbox" name="tag_tag" value="pve">PVE
+    <input type="checkbox" name="tag_tag" value="pvp">PVP
+    <input type="checkbox" name="tag_tag" value="quick-timeevents">Quick-Time Events
+    <input type="checkbox" name="tag_tag" value="racing">Racing
+    <input type="checkbox" name="tag_tag" value="realtimetactics">Real Time Tactics
+    <input type="checkbox" name="tag_tag" value="real-time">Real-Time
+    <input type="checkbox" name="tag_tag" value="real-timewithpause">Real-Time With Pause
+    <input type="checkbox" name="tag_tag" value="realistic">Realistic<br>
+    <input type="checkbox" name="tag_tag" value="relaxing">Relaxing
+    <input type="checkbox" name="tag_tag" value="remake">Remake
+    <input type="checkbox" name="tag_tag" value="replayvalue">Replay Value
+    <input type="checkbox" name="tag_tag" value="resourcemanagement">Resource Management
+    <input type="checkbox" name="tag_tag" value="retro">Retro
+    <input type="checkbox" name="tag_tag" value="rhythm">Rhythm
+    <input type="checkbox" name="tag_tag" value="robots">Robots
+    <input type="checkbox" name="tag_tag" value="rogue-lite">Rogue-Lite
+    <input type="checkbox" name="tag_tag" value="rogue-like">Rogue-Like
+    <input type="checkbox" name="tag_tag" value="romance">Romance<br>
+    <input type="checkbox" name="tag_tag" value="rome">Rome
+    <input type="checkbox" name="tag_tag" value="rpg">RPG
+    <input type="checkbox" name="tag_tag" value="rpgmaker">RPG Maker
+    <input type="checkbox" name="tag_tag" value="rts">RTS
+    <input type="checkbox" name="tag_tag" value="runner">Runner
+    <input type="checkbox" name="tag_tag" value="sailing">Sailing
+    <input type="checkbox" name="tag_tag" value="sandbox">Sandbox
+    <input type="checkbox" name="tag_tag" value="satire">Satire
+    <input type="checkbox" name="tag_tag" value="sci-fi">Sci-Fi
+    <input type="checkbox" name="tag_tag" value="science">Science
+    <input type="checkbox" name="tag_tag" value="scoreattack'">Score Attack'
+    <input type="checkbox" name="tag_tag" value="sequel">Sequel<br>
+    <input type="checkbox" name="tag_tag" value="sexualcontent">Sexual Content
+    <input type="checkbox" name="tag_tag" value="shooter">Shooter
+    <input type="checkbox" name="tag_tag" value="short">Short
+    <input type="checkbox" name="tag_tag" value="shoot'emup">Shoot 'Em Up
+    <input type="checkbox" name="tag_tag" value="sidescroller">Side Scroller
+    <input type="checkbox" name="tag_tag" value="silentprotagonist">Silent Protagonist
+    <input type="checkbox" name="tag_tag" value="simulation">Simulation
+    <input type="checkbox" name="tag_tag" value="singleplayer">Single-Player
+    <input type="checkbox" name="tag_tag" value="skating">Skating<br>
+    <input type="checkbox" name="tag_tag" value="skateboarding">Skate Boarding
+    <input type="checkbox" name="tag_tag" value="skiing">Skiing
+    <input type="checkbox" name="tag_tag" value="space">Space
+    <input type="checkbox" name="tag_tag" value="spacesim">Spacesim
+    <input type="checkbox" name="tag_tag" value="spectaclefighter">Spectacle Fighter
+    <input type="checkbox" name="tag_tag" value="spelling">Spelling
+    <input type="checkbox" name="tag_tag" value="sports">Sports
+    <input type="checkbox" name="tag_tag" value="sniper">Sniper
+    <input type="checkbox" name="tag_tag" value="snow">Snow
+    <input type="checkbox" name="tag_tag" value="snowboarding">Snowboarding<br>
+    <input type="checkbox" name="tag_tag" value="soccer">Soccer
+    <input type="checkbox" name="tag_tag" value="software">Software
+    <input type="checkbox" name="tag_tag" value="softwaretraining">Software Training
+    <input type="checkbox" name="tag_tag" value="sokoban">Sokoban
+    <input type="checkbox" name="tag_tag" value="solitaire">Solitaire
+    <input type="checkbox" name="tag_tag" value="souls-like">Souls-Like
+    <input type="checkbox" name="tag_tag" value="soundtrack">Soundtrack
+    <input type="checkbox" name="tag_tag" value="splitscreen">Splitscreen
+    <input type="checkbox" name="tag_tag" value="starwars">Star Wars<br>
+    <input type="checkbox" name="tag_tag" value="steammachine">Steam Machine
+    <input type="checkbox" name="tag_tag" value="steampunk'">Steampunk'
+    <input type="checkbox" name="tag_tag" value="stealth">Stealth
+    <input type="checkbox" name="tag_tag" value="storyrich">Storyrich
+    <input type="checkbox" name="tag_tag" value="strategy">Strategy
+    <input type="checkbox" name="tag_tag" value="strategyrpg">Strategy RPG
+    <input type="checkbox" name="tag_tag" value="submarine">Submarine
+    <input type="checkbox" name="tag_tag" value="superhero">Superhero
+    <input type="checkbox" name="tag_tag" value="supernatural">Supernatural<br>
+    <input type="checkbox" name="tag_tag" value="surreal">Surreal
+    <input type="checkbox" name="tag_tag" value="survival">Survival
+    <input type="checkbox" name="tag_tag" value="survivalhorror">Survival Horror
+    <input type="checkbox" name="tag_tag" value="swordplay">Sword Play
+    <input type="checkbox" name="tag_tag" value="stylized">Stylized
+    <input type="checkbox" name="tag_tag" value="tactical">Tactical
+    <input type="checkbox" name="tag_tag" value="tacticalrpg">Tactical RPG
+    <input type="checkbox" name="tag_tag" value="tanks">Tanks
+    <input type="checkbox" name="tag_tag" value="team-based">Team-Based<br>
+    <input type="checkbox" name="tag_tag" value="text-based">Text-Based
+    <input type="checkbox" name="tag_tag" value="tennis">Tennis
+    <input type="checkbox" name="tag_tag" value="thriller">Thriller
+    <input type="checkbox" name="tag_tag" value="timeattack">Time Attack
+    <input type="checkbox" name="tag_tag" value="timemanagement">Time Management
+    <input type="checkbox" name="tag_tag" value="timemanipulation">Time Manipulation
+    <input type="checkbox" name="tag_tag" value="timetravel">Time Travel
+    <input type="checkbox" name="tag_tag" value="top-down">Top-Down<br>
+    <input type="checkbox" name="tag_tag" value="top-downshooter">Top-Down Shooter
+    <input type="checkbox" name="tag_tag" value="touch-friendly">Touch-Friendly
+    <input type="checkbox" name="tag_tag" value="towerdefense">Tower Defense
+    <input type="checkbox" name="tag_tag" value="thirdperson">Third Person
+    <input type="checkbox" name="tag_tag" value="third-personshooter">Third-Person Shooter
+    <input type="checkbox" name="tag_tag" value="trading">Trading
+    <input type="checkbox" name="tag_tag" value="tradingcardgame">Trading Card Game<br>
+    <input type="checkbox" name="tag_tag" value="trackir">Trackir
+    <input type="checkbox" name="tag_tag" value="trains">Trains
+    <input type="checkbox" name="tag_tag" value="transhumanism">Transhumanism
+    <input type="checkbox" name="tag_tag" value="transportation">Transportation
+    <input type="checkbox" name="tag_tag" value="turn-based">Turn-Based
+    <input type="checkbox" name="tag_tag" value="turn-basedcombat">Turn-Based Combat
+    <input type="checkbox" name="tag_tag" value="turn-basedstrategy">Turn-Based Strategy<br>
+    <input type="checkbox" name="tag_tag" value="turn-basedtactics">Turn-Based Tactics
+    <input type="checkbox" name="tag_tag" value="tutorial">Tutorial
+    <input type="checkbox" name="tag_tag" value="twinstickshooter">Twin Stick Shooter
+    <input type="checkbox" name="tag_tag" value="typing">Typing
+    <input type="checkbox" name="tag_tag" value="underground">Underground
+    <input type="checkbox" name="tag_tag" value="underwater">Underwater
+    <input type="checkbox" name="tag_tag" value="unforgiving">Unforgiving
+    <input type="checkbox" name="tag_tag" value="utilities">Utilities
+    <input type="checkbox" name="tag_tag" value="vampire">Vampire<br>
+    <input type="checkbox" name="tag_tag" value="videoproduction">Video Production
+    <input type="checkbox" name="tag_tag" value="villainprotagonist">Villain Protagonist
+    <input type="checkbox" name="tag_tag" value="violent">Violent
+    <input type="checkbox" name="tag_tag" value="visualnovel">Visual Novel
+    <input type="checkbox" name="tag_tag" value="voicecontrol">Voice Control
+    <input type="checkbox" name="tag_tag" value="voxel">Voxel
+    <input type="checkbox" name="tag_tag" value="vr">VR
+    <input type="checkbox" name="tag_tag" value="war">War<br>
+    <input type="checkbox" name="tag_tag" value="wargame">War Game
+    <input type="checkbox" name="tag_tag" value="warhammer40k">Warhammer 40k
+    <input type="checkbox" name="tag_tag" value="walkingsimulator">Walking Simulator
+    <input type="checkbox" name="tag_tag" value="webpublishing">Webpublishing
+    <input type="checkbox" name="tag_tag" value="western">Western<br>
+    <input type="checkbox" name="tag_tag" value="werewolves">Werewolves
+    <input type="checkbox" name="tag_tag" value="wordgame">Word Game
+    <input type="checkbox" name="tag_tag" value="worldwari">World War I
+    <input type="checkbox" name="tag_tag" value="worldwarii">World War II
+    <input type="checkbox" name="tag_tag" value="wrestling">Wrestling
+    <input type="checkbox" name="tag_tag" value="zombies">Zombies<br>
+    <input type="hidden" name="title" value="{{title}}">
+    <input type="hidden" name="desc" value="{{desc}}">
+    <input type="hidden" name="mature" value="{{mature}}">
+    <input type="hidden" name="game_type" value="{{game_type}}">
+    <input type="hidden" name="genre" value="{{genre}}">
+    <input type="hidden" name="category" value="{{category}}">
+    <input type="hidden" name="step" value="langs">
+    <br>
+    <input type="submit" value="next">
+    </form>
+
+    {% elif step == "langs" %}
+    <p style="color:black; font-family:Courier New; font-size: 18px;" align = 'center'><b>Choose the languages(s) that the game supports:</b></p>
+    <br>
+    <form action="{{ url_for('game_picker') }}" method="post" align='center' style = "font-family:Courier New;">
+    <input type="checkbox" name="lang" value="arabic">Arabic
+    <input type="checkbox" name="lang" value="bulgarian">Bulgarian
+    <input type="checkbox" name="lang" value="czech">Czech
+    <input type="checkbox" name="lang" value="danish">Danish
+    <input type="checkbox" name="lang" value="dutch">Dutch
+    <input type="checkbox" name="lang" value="english">English<br>
+    <input type="checkbox" name="lang" value="finnish">Finnish
+    <input type="checkbox" name="lang" value="french">French
+    <input type="checkbox" name="lang" value="german">German
+    <input type="checkbox" name="lang" value="greek">Greek
+    <input type="checkbox" name="lang" value="hungarian">Hungarian
+    <input type="checkbox" name="lang" value="japanese">Japanese<br>
+    <input type="checkbox" name="lang" value="korean">Korean
+    <input type="checkbox" name="lang" value="norwegian">Norwegian
+    <input type="checkbox" name="lang" value="polish">Polish
+    <input type="checkbox" name="lang" value="portuguese">Portuguese<br>
+    <input type="checkbox" name="lang" value="portuguese-brazil">Portuguese-Brazil
+    <input type="checkbox" name="lang" value="romanian">Romanian
+    <input type="checkbox" name="lang" value="russian">Russian
+    <input type="checkbox" name="lang" value="simplifiedchinese">Simplified Chinese
+    <input type="checkbox" name="lang" value="spanish-latinamerica">Spanish-Latin America
+    <input type="checkbox" name="lang" value="spanish-spain">Spanish-Spain<br>
+    <input type="checkbox" name="lang" value="swedish">Swedish
+    <input type="checkbox" name="lang" value="thai">Thai
+    <input type="checkbox" name="lang" value="traditionalchinese">Traditional Chinese
+    <input type="checkbox" name="lang" value="turkish">Turkish
+    <input type="checkbox" name="lang" value="ukrainian">Ukrainian
+    <input type="checkbox" name="lang" value="vietnamese">Vietnamese<br>
+    <input type="hidden" name="title" value="{{title}}">
+    <input type="hidden" name="desc" value="{{desc}}">
+    <input type="hidden" name="mature" value="{{mature}}">
+    <input type="hidden" name="game_type" value="{{game_type}}">
+    <input type="hidden" name="genre" value="{{genre}}">
+    <input type="hidden" name="category" value="{{category}}">
+    <input type="hidden" name="tag_tag" value="{{tag_tag}}">
+    <input type="hidden" name="step" value="do_registration">
+    <br>
+    <input type="submit" value="submit">
+    </form>
+
+
+  {% elif step == "do_registration" %}
+  <p style="color:black; font-family:Courier New; font-size: 20px; padding: 10px 60px;" align = 'center'><b>Games similar to the game that has been entered had the best revenue during this season:</b></p>
+  <p align = 'center' style= "font-family:Courier New; font-size: 20px">  {{ output }} 
+  </p>
+  {% endif %}
+</body>
+</html>
+
